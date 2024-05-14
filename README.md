@@ -9,7 +9,7 @@ This project is created as a showcase on how to build a 3D web application with 
 
 ![image.png](./image.png)
 
-Live Demo: https://ugl.hft-stuttgart.de/lindau2024/final.html
+Live Demo: https://3-dforum-2024-workshop.vercel.app
 
 ## Default Setting
 
