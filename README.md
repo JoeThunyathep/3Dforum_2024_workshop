@@ -7,11 +7,17 @@ This project is created as a showcase on how to build a 3D web application with 
 - 3D tiles (from OGC API - 3D GeoVolumes) 
 - Additional 2D imagery layer - Flood risk (ArcGIS).
 
+## How to Run locally
+- Using Python: ` python -m http.server 80 `
+- Using VSCode + Liver Server Extension
+
+## Live Demo: 
 ![image.png](./image.png)
+https://3-dforum-2024-workshop.vercel.app
 
-Live Demo: https://3-dforum-2024-workshop.vercel.app
 
-## Default Setting
+
+## Default Settings:
 
 - **Initial View**: The application starts with a view centered at latitude 47.5728539, longitude 9.6473353, and a height of 3500.0 meters. (Near to Lindau)
 - **Basemap**: Utilizes OpenStreetMap as the base imagery layer.
