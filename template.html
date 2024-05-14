@@ -1,0 +1,85 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.94/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.94/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="https://3dps.gis.lrg.tum.de/viewerCesiumNavigationMixin.min.js"> </script>
+    <style>body {margin: 0;padding: 0;overflow: hidden;}</style>
+</head>
+<body>
+    <div id="cesiumContainer" style="width: 100%; height:100%"></div>
+    <script>
+        // input data
+        const data3D_tilesetURL = ''; // a link to a 3D Tileset
+        const terrainURL = ''; // a link to a terrain
+        const data2D_arcgisURL = ''; // a link to a 2D ArcGIS MapServer
+        const basemapProvider = new Cesium.ArcGisMapServerImageryProvider({
+             url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+            // url : 'https://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer'
+            // url: 'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer'
+            // url: 'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer'
+            // url : 'https://services.arcgisonline.com/arcgis/rest/services/Specialty/DeLorme_World_Base_Map/MapServer'
+
+        })
+        const osmProvider = new Cesium.OpenStreetMapImageryProvider({
+            url: 'https://a.tile.openstreetmap.org/'
+        });
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            baseLayerPicker: false,
+            baseLayer: false,
+            vrButton: false,
+            geocoder: false,
+            navigationHelpButton: false,
+            selectionIndicator: false,
+            shadows: false,
+            timeline: true,
+            sceneModePicker: false,
+            imageryProvider: osmProvider
+        });
+
+        if (terrainURL) {
+            viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
+                url: terrainURL
+            });
+        }
+        // Component 2: 3D Tileset
+        var tileset;
+        if (data3D_tilesetURL) {
+            tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+                url: data3D_tilesetURL
+            }));
+            // === Settting the style of the 3D Tileset ===
+            var cityStyle = new Cesium.Cesium3DTileStyle({
+                color: {
+                    conditions: [
+                        ["${surface} === 'wall'", "color('#f2f2f2')"],
+                        ["${surface} === 'roof'", "color('#ff5c4d')"],
+                        ["${surface} === 'bridge'", "color('#999999')"]
+                    ]
+                },
+            });
+            tileset.readyPromise.then(function (tileset) {
+                tileset.style = cityStyle
+            });
+        }
+        if (data2D_arcgisURL) {
+            viewer.imageryLayers.addImageryProvider(new Cesium.ArcGisMapServerImageryProvider({
+                url: data2D_arcgisURL
+            }));
+        }
+        // === Settting the initial view of the 3D Viewer ===
+        viewer.camera.flyTo({
+            destination: Cesium.Cartesian3.fromDegrees(9.6473353, 47.5728539, 3500.0),
+            orientation: {
+                heading: Cesium.Math.toRadians(0.0),
+                pitch: Cesium.Math.toRadians(-40.0),
+                roll: 0.0
+            }
+        });
+
+        // === Adding the navigation controls ===
+        viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
+    </script>
+</body>
+
+</html>
