@@ -11,13 +11,13 @@
     <div id="cesiumContainer" style="width: 100%; height:100%"></div>
     <script>
         // input data
-        const data3D_tilesetURL = ''; // a link to a 3D Tileset
-        const terrainURL = ''; // a link to a terrain
-        const data2D_arcgisURL = ''; // a link to a 2D ArcGIS MapServer
+        const data3D_tilesetURL = 'https://web3d.basemap.de/cesium/buildings-fly/root.json'; // a link to a 3D Tileset
+        const terrainURL = 'https://web3d.basemap.de/cesium/dgm5-mesh'; // a link to a terrain
+        const data2D_arcgisURL = 'https://tiles.arcgis.com/tiles/1lplwYilIlo008hQ/arcgis/rest/services/HighFloodRisk_ExportFeatures/MapServer'; // a link to a 2D ArcGIS MapServer
         const basemapProvider = new Cesium.ArcGisMapServerImageryProvider({
-             url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+            //  url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
             // url : 'https://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer'
-            // url: 'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer'
+            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer'
             // url: 'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer'
             // url : 'https://services.arcgisonline.com/arcgis/rest/services/Specialty/DeLorme_World_Base_Map/MapServer'
 
@@ -35,7 +35,7 @@
             shadows: false,
             timeline: true,
             sceneModePicker: false,
-            imageryProvider: osmProvider
+            imageryProvider: basemapProvider
         });
 
         if (terrainURL) {

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CesiumJS Map Application</title>
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.94/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.94/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <style>
+        #cesiumContainer {
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer"></div>
+    <script>
+        // Initialize the Cesium Viewer
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            imageryProvider: new Cesium.OpenStreetMapImageryProvider({
+                url : 'https://a.tile.openstreetmap.org/'
+            }),
+            baseLayerPicker: false,
+            terrainProvider: new Cesium.CesiumTerrainProvider({
+                url: 'https://web3d.basemap.de/cesium/dgm5-mesh'
+            })
+        });
+
+        // Set the initial camera view
+        viewer.camera.setView({
+            destination : Cesium.Cartesian3.fromDegrees(6.828046, 51.527916, 3500.0)
+        });
+
+        // Load 3D Tiles
+        var tileset = new Cesium.Cesium3DTileset({
+            url: 'https://web3d.basemap.de/cesium/buildings-fly/root.json'
+        });
+        viewer.scene.primitives.add(tileset);
+
+        // Load additional 2D ArcGIS MapServer Imagery
+        var arcGisMapServerImagery = new Cesium.ArcGisMapServerImageryProvider({
+            url: 'https://tiles.arcgis.com/tiles/1lplwYilIlo008hQ/arcgis/rest/services/HighFloodRisk_ExportFeatures/MapServer'
+        });
+        viewer.imageryLayers.addImageryProvider(arcGisMapServerImagery);
+    </script>
+</body>
+</html>
